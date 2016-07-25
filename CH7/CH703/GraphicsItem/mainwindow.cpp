@@ -26,7 +26,7 @@ MainWindow::MainWindow(QWidget *parent)
     setCentralWidget(view);
     resize(rayx,rayy);
     //setWindowTitle(tr("Graphics Items"));
-    port =7777;
+    port =9999;
     udpSocket = new QUdpSocket(this);
     connect(udpSocket,SIGNAL(readyRead()),this,SLOT(dataReceived()));
     bool result=udpSocket->bind(port);
@@ -248,7 +248,7 @@ void MainWindow::dataReceived()
             delete redtextitem;
             delete bluetextitem;
             QString rayaddr = sender.toString();
-            int tail = rayaddr.right(rayaddr.length()-rayaddr.lastIndexOf(".")).toInt();
+            int tail = rayaddr.right(rayaddr.length()-rayaddr.lastIndexOf(".")-1).toInt();
             if(tail%2 == 0)
                 redscore++;
             else

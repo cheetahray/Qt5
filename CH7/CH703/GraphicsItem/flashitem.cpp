@@ -3,7 +3,7 @@
 FlashItem::FlashItem(QObject *parent) :
     QObject(parent)
 {
-    camera = new QCamera(QCamera::availableDevices()[0]);
+    camera = new QCamera(QCamera::availableDevices()[1]);
     imageCapture = new QCameraImageCapture(camera);
     view_finder = new QCameraViewfinder();
 
@@ -36,6 +36,7 @@ QRectF FlashItem::boundingRect() const
 {
     //qreal adjust = 2;
     return QRectF(-pix.width()>>1,-pix.height()>>1,pix.width(),pix.height());
+    //return QRectF(-600,-300, 1200,600);
 }
 
 void FlashItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
