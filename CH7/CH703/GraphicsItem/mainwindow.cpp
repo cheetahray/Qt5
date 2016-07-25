@@ -3,6 +3,8 @@
 //#include "startitem.h"
 //#include <QGraphicsItemAnimation>
 //#include <QTimeLine>
+#include <QHostAddress>
+#include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -24,6 +26,15 @@ MainWindow::MainWindow(QWidget *parent)
     setCentralWidget(view);
     resize(rayx,rayy);
     //setWindowTitle(tr("Graphics Items"));
+    port =7777;
+    udpSocket = new QUdpSocket(this);
+    connect(udpSocket,SIGNAL(readyRead()),this,SLOT(dataReceived()));
+    bool result=udpSocket->bind(port);
+    if(!result)
+    {
+        QMessageBox::information(this,tr("error"),tr("udp socket create error!"));
+        return;
+    }
 }
 
 MainWindow::~MainWindow()
@@ -142,7 +153,7 @@ void MainWindow::slotAddPolygonItem()   //在场景中加入一个多边形图�
     item->setPos((qrand()%int(scene->sceneRect().width()))-200,(qrand()%int(scene->sceneRect().height()))-200);
 }
 */
-void MainWindow::rayChangeText(const char* red, const char* blue)
+void MainWindow::rayChangeText(QString red, QString blue)
 {
     int rayfont = 96;
     QFont font("Times",rayfont);
@@ -166,12 +177,9 @@ void MainWindow::rayChangeText(const char* red, const char* blue)
 
 void MainWindow::slotAddTextItem()      //在场景中加入一个文字图元
 {
+    redscore = 0;
+    bluescore = 0;
     rayChangeText("0","0");
-    scene->removeItem(redtextitem);
-    scene->removeItem(bluetextitem);
-    delete redtextitem;
-    delete bluetextitem;
-    rayChangeText("3","2");
 }
 /*
 void MainWindow::slotAddRectItem()      //在场景中加入一个长方形图元
@@ -223,3 +231,29 @@ void MainWindow::slotAddAnimationItem() //在场景中加入一个动画星星
     scene->addItem(item);
 }
 */
+
+void MainWindow::dataReceived()
+{
+    while(udpSocket->hasPendingDatagrams())
+    {
+        QByteArray datagram;
+        datagram.resize(udpSocket->pendingDatagramSize());
+        QHostAddress sender;
+        udpSocket->readDatagram(datagram.data(),datagram.size(),&sender);
+        QString msg=datagram.data();
+        if (msg == "@")
+        {
+            scene->removeItem(redtextitem);
+            scene->removeItem(bluetextitem);
+            delete redtextitem;
+            delete bluetextitem;
+            QString rayaddr = sender.toString();
+            int tail = rayaddr.right(rayaddr.length()-rayaddr.lastIndexOf(".")).toInt();
+            if(tail%2 == 0)
+                redscore++;
+            else
+                bluescore++;
+            rayChangeText(QString::number(redscore, 10),QString::number(bluescore, 10));
+        }
+    }
+}

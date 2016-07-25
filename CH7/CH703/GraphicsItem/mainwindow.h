@@ -6,6 +6,7 @@
 #include <QGraphicsView>
 #include <QMenuBar>
 #include <QGraphicsEllipseItem>
+#include <QUdpSocket>
 
 class MainWindow : public QMainWindow
 {
@@ -18,7 +19,7 @@ public:
     void initScene();            			//初始化场景
     void createActions();       			//创建主窗体的所有动作
     void createMenus();         			//创建主窗体的菜单栏
-    void rayChangeText(const char*, const char*);
+    void rayChangeText(QString, QString);
 public slots:
     //void slotNew();              			//新建一个显示窗体
     //void slotClear();           			//清除场景中所有的图元
@@ -30,7 +31,7 @@ public slots:
     void slotAddAlphaItem();        		//在场景中加入一个透明蝴蝶图片
     void slotAddFlashItem();
     //void slotAddAnimationItem();
-
+    void dataReceived();
 private:
     QGraphicsScene *scene;
     QGraphicsPixmapItem *alphaitem;
@@ -46,6 +47,10 @@ private:
     QAction *addAlphaItemAct;
     QAction *addFlashItemAct;
     //QAction *addAnimItemAct;
+    int port;
+    QUdpSocket *udpSocket;
+    int redscore;
+    int bluescore;
 };
 
 #endif // MAINWINDOW_H
