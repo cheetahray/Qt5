@@ -4,6 +4,12 @@
 #include <QObject>
 #include <QGraphicsItem>
 #include <QPainter>
+#include <QCameraImageCapture>
+#include <QCameraViewfinder>
+#include <QCamera>
+#include <QTimer>
+#include <QImage>
+#include <QDebug>
 
 class FlashItem : public QObject,public QGraphicsItem
 {
@@ -16,10 +22,17 @@ public:
 private:
     bool flash;
     QTimer *timer;
+    QCamera *camera;
+    QCameraImageCapture *imageCapture;
+    QCameraViewfinder *view_finder;
+    QPixmap pix;
+
 signals:
     
-public slots:
-    
+private slots:
+    //void startCaptureImage();
+    void displayImage(int id, QImage image);
+    void videoFrameCapture();
 };
 
 #endif // FLASHITEM_H

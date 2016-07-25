@@ -1,5 +1,5 @@
 #include "mainwindow.h"
-//#include "flashitem.h"
+#include "flashitem.h"
 //#include "startitem.h"
 //#include <QGraphicsItemAnimation>
 //#include <QTimeLine>
@@ -82,9 +82,9 @@ void MainWindow::initScene()        	//初始化场景
         slotAddEllipseItem();
     for(i=0;i<3;i++)
         slotAddPolygonItem();
-    for(i=0;i<3;i++)
     */
-        slotAddTextItem();
+    //for(i=0;i<3;i++)
+        slotAddFlashItem();
     /*
     for(i=0;i<3;i++)
         slotAddRectItem();
@@ -93,10 +93,10 @@ void MainWindow::initScene()        	//初始化场景
         slotAddAlphaItem();
     /*
     for(i=0;i<3;i++)
-        slotAddFlashItem();
-    for(i=0;i<3;i++)
         slotAddAnimationItem();
     */
+    //for(i=0;i<3;i++)
+        slotAddTextItem();
 }
 /*
 void MainWindow::slotNew()        		//新建一个显示窗体
@@ -195,14 +195,14 @@ void MainWindow::slotAddAlphaItem()    	//在场景中加入一个透明蝴蝶�
     //item->setPos((qrand()%int(scene->sceneRect().width()))-200,(qrand()%int(scene->sceneRect().height()))-200);
     alphaitem->setPos( -int(scene->sceneRect().width()) >> 1, -int(scene->sceneRect().height()) >> 1);
 }
-/*
+
 void MainWindow::slotAddFlashItem()  	//在场景中加入一个闪烁图元
 {
     FlashItem *item = new FlashItem;
     scene->addItem(item);
-    item->setPos((qrand()%int(scene->sceneRect().width()))-200,(qrand()%int(scene->sceneRect().height()))-200);
+    item->setPos(0,0);
 }
-
+/*
 void MainWindow::slotAddAnimationItem() //在场景中加入一个动画星星
 {
     StartItem *item = new StartItem;
