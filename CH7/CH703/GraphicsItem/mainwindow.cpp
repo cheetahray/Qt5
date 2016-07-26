@@ -249,7 +249,7 @@ void MainWindow::dataReceived()
             delete bluetextitem;
             QString rayaddr = sender.toString();
             int tail = rayaddr.right(rayaddr.length()-rayaddr.lastIndexOf(".")-1).toInt();
-            if(tail%2 == 0)
+            if(tail%2 == 1)
                 redscore++;
             else
                 bluescore++;

@@ -3,7 +3,7 @@
 FlashItem::FlashItem(QObject *parent) :
     QObject(parent)
 {
-    camera = new QCamera(QCamera::availableDevices()[1]);
+    camera = new QCamera(QCamera::availableDevices()[0]);
     imageCapture = new QCameraImageCapture(camera);
     view_finder = new QCameraViewfinder();
 
