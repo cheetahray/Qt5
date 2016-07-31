@@ -5,6 +5,7 @@
 //#include <QTimeLine>
 #include <QHostAddress>
 #include <QMessageBox>
+#include <QKeyEvent>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -86,6 +87,12 @@ void MainWindow::createMenus()         	//创建主窗体的菜单栏
     */
 }
 
+void MainWindow::keyPressEvent(QKeyEvent *event)
+{
+    if(event->key() == Qt::Key_Escape)
+        close();
+}
+
 void MainWindow::initScene()        	//初始化场景
 {   /*
     int i;
@@ -94,7 +101,7 @@ void MainWindow::initScene()        	//初始化场景
     for(i=0;i<3;i++)
         slotAddPolygonItem();
     */
-    //for(i=0;i<3;i++)
+    /*for(i=0;i<3;i++)
         slotAddFlashItem();
     /*
     for(i=0;i<3;i++)

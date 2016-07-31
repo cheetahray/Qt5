@@ -32,6 +32,8 @@ public slots:
     void slotAddFlashItem();
     //void slotAddAnimationItem();
     void dataReceived();
+protected:
+  void keyPressEvent(QKeyEvent *ke);
 private:
     QGraphicsScene *scene;
     QGraphicsPixmapItem *alphaitem;
